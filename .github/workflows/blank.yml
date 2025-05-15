@@ -44,5 +44,5 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git remote set-url origin https://Uzair-JK:${HF_TOKEN}@huggingface.co/spaces/Uzair-JK/troubleshooting-agent
+          git remote set-url origin https://Uzair-JK:${HF_TOKEN}@huggingface.co/spaces/Uzair-JK/troubleshooting-agent-nlp
           git push origin main
