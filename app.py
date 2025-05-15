@@ -63,11 +63,6 @@ with gr.Blocks() as demo:
     chatbot = gr.Chatbot(elem_id="chatbot", height=450)
     state = gr.State([])
 
-    with gr.Row():
-        msg = gr.Textbox(placeholder="Describe your problem here...", show_label=False, lines=2, max_lines=4)
-        send_btn = gr.Button("Send")
-
-    send_btn.click(troubleshoot_agent, inputs=[msg, state], outputs=[chatbot, state, msg])
     msg.submit(troubleshoot_agent, inputs=[msg, state], outputs=[chatbot, state, msg])
 
 demo.launch()
