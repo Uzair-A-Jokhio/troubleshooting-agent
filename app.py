@@ -61,6 +61,7 @@ with gr.Blocks() as demo:
     gr.Markdown("Ask me any tech issue and I'll try to help! 💡")
 
     chatbot = gr.Chatbot(elem_id="chatbot", height=450)
+    msg = gr.Textbox(placeholder="Ask your question...", show_label=False)
     state = gr.State([])
 
     msg.submit(troubleshoot_agent, inputs=[msg, state], outputs=[chatbot, state, msg])
