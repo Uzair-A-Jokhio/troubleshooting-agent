@@ -53,14 +53,21 @@ def troubleshoot_agent(message, history):
 
     # Update chat history
     history.append((message, response))  # Format: (user_message, bot_response)
-    return history, history
+    return history, history, ""
 
 # ChatInterface UI
-with gr.Blocks() as demo:
-    chatbot = gr.Chatbot(elem_id="chatbot")
-    msg = gr.Textbox(placeholder="Ask your question...")
-    state = gr.State([])  # To store chat history as list of messages
-    
-    msg.submit(troubleshoot_agent, inputs=[msg, state], outputs=[chatbot, state])
-    
+with gr.Blocks(css=open("styles.css").read()) as demo:
+    gr.Markdown("# 🛠️ Troubleshooting Agent")
+    gr.Markdown("Ask me any tech issue and I'll try to help! 💡")
+
+    chatbot = gr.Chatbot(elem_id="chatbot", height=450)
+    state = gr.State([])
+
+    with gr.Row():
+        msg = gr.Textbox(placeholder="Describe your problem here...", show_label=False, lines=2, max_lines=4)
+        send_btn = gr.Button("Send")
+
+    send_btn.click(troubleshoot_agent, inputs=[msg, state], outputs=[chatbot, state, msg])
+    msg.submit(troubleshoot_agent, inputs=[msg, state], outputs=[chatbot, state, msg])
+
 demo.launch()
