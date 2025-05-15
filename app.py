@@ -56,7 +56,7 @@ def troubleshoot_agent(message, history):
     return history, history, ""
 
 # ChatInterface UI
-with gr.Blocks(css=open("styles.css").read()) as demo:
+with gr.Blocks() as demo:
     gr.Markdown("# 🛠️ Troubleshooting Agent")
     gr.Markdown("Ask me any tech issue and I'll try to help! 💡")
 
