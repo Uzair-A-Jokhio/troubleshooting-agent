@@ -1,0 +1,25 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Push to Hugging Face Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "uzairarifjokhio@gmail.com"
+          git config --global user.name "Uzair-A-Jokhio"
+          git clone https://huggingface.co/spaces/Uzair-JK/troubleshooting-agent-nlp space
+          cp -r * space/
+          cd space
+          git add .
+          git commit -m "Deploy via GitHub Actions"
+          git push https://Uzair-JK:$HF_TOKEN@huggingface.co/spaces/Uzair-JK/troubleshooting-agent-nlp main
