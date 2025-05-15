@@ -27,25 +27,33 @@ def troubleshoot_agent(message, history):
     query_lower = query.lower()
     sentiment = analyze_sentiment(query)
 
+    # Initialize response
+    response = "❓ I couldn't identify the issue. Can you provide more details or rephrase your problem?"
+
     # Exact match
     for problem, solution in knowledge_base.items():
         if problem in query_lower:
             priority = "High" if sentiment < -0.3 else "Normal"
             response = f"🔍 Issue: **{problem.capitalize()}**\n💡 Solution: {solution}\n⚠️ Priority: {priority}"
-            return response
+            break
+    else:
+        # Fallback: keyword matching
+        doc = nlp(query)
+        keywords = [token.lemma_ for token in doc if token.pos_ in ["NOUN", "PROPN", "VERB"]]
 
-    # Fallback: keyword matching
-    doc = nlp(query)
-    keywords = [token.lemma_ for token in doc if token.pos_ in ["NOUN", "PROPN", "VERB"]]
+        for keyword in keywords:
+            for problem, solution in knowledge_base.items():
+                if keyword in problem:
+                    priority = "High" if sentiment < -0.3 else "Normal"
+                    response = f"🤔 Issue (guessed): **{problem.capitalize()}**\n💡 Possible Solution: {solution}\n⚠️ Priority: {priority}"
+                    break
+            else:
+                continue
+            break
 
-    for keyword in keywords:
-        for problem, solution in knowledge_base.items():
-            if keyword in problem:
-                priority = "High" if sentiment < -0.3 else "Normal"
-                response = f"🤔 Issue (guessed): **{problem.capitalize()}**\n💡 Possible Solution: {solution}\n⚠️ Priority: {priority}"
-                return response
-
-    return "❓ I couldn't identify the issue. Can you provide more details or rephrase your problem?"
+    # Update chat history
+    history.append((message, response))  # Format: (user_message, bot_response)
+    return history, history
 
 # ChatInterface UI
 with gr.Blocks() as demo:
