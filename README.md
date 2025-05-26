@@ -14,7 +14,7 @@ short_description: 'A simple yet Powerful troubleshooting agent '
 [![Sync to Hugging Face Hub](https://github.com/Uzair-A-Jokhio/troubleshooting-agent/actions/workflows/blank.yml/badge.svg)](https://github.com/Uzair-A-Jokhio/troubleshooting-agent/actions/workflows/blank.yml)
 
 # 🛠️ Troubleshooting Agent 
-A simple chatbot that helps identify and solve common tech issues using NLP. 
+A simple chatbot that helps identify and solve common tech issues using NLP. [check it out](https://huggingface.co/spaces/Uzair-JK/troubleshooting-agent-nlp)
 
 ## 🚀 Features
 - 💬 Chat interface via Gradio
